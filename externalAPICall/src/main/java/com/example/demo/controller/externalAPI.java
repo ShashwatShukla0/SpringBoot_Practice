@@ -1,0 +1,31 @@
+package com.example.demo.controller;
+
+
+import java.util.Arrays;
+import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+@RestController
+public class externalAPI {
+	
+	@GetMapping("/hello")
+	public String hello() {
+		return "Hello World!";
+	}
+	
+	@GetMapping("/api")
+	private List<Object> apiCall() {
+		
+		String uri = "https://api.github.com/repos/rethinkdb/rethinkdb/stargazers";
+		
+		RestTemplate res = new RestTemplate();
+		
+		Object[] count = res.getForObject(uri,Object[].class);
+		
+		return Arrays.asList(count);
+				
+	}
+
+}
